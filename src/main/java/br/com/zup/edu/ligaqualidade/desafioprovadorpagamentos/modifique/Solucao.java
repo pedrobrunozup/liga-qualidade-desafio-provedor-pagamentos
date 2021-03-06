@@ -116,9 +116,11 @@ public class Solucao {
 
 		
 		// status, valorOriginal, valorASerRecebido, dataRecebimento
-		return List.of(new String[][] {
-					 {"pago","200","194","04/03/2021"} 					 
-					}); 
+		//return List.of(new String[][] {
+		//			 {"pago","200","194","04/03/2021"}
+		//			});
+
+		return listaInfoTransacoes;
 	}
 
 }
