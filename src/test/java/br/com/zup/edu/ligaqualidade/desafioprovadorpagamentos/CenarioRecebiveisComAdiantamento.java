@@ -63,9 +63,9 @@ public class CenarioRecebiveisComAdiantamento {
 		return Stream.of(
 				Arguments.of(
 						List.of(new DadosTesteTransacao("100", "CREDITO",1)),
-						List.of("1,0.01"),
+						List.of("1,0.10"),
 						List.of(new DadosEsperadosRetorno("pago", "100", "86",
-								hoje.plusDays(30).format(padraoFormatacao))
+								hoje.format(padraoFormatacao))
 
 						)),
 				Arguments.of(
