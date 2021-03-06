@@ -53,7 +53,7 @@ public class Solucao {
 		 */
 
 		LocalDateTime hoje = LocalDateTime.now();
-		Date dateHoje = Date.from(hoje.atZone(ZoneId.systemDefault()).toInstant());
+		//Date dateHoje = Date.from(hoje.atZone(ZoneId.systemDefault()).toInstant());
 
 		String status = null;
 		String valorOriginal = null;
@@ -68,9 +68,8 @@ public class Solucao {
 
 		List<String[]> listaInfoTransacoes = new ArrayList<String[]>();
 
-		System.out.println("TRANSACOES");
 		for (String transacao : infoTransacoes) {
-			System.out.println(transacao);
+			//System.out.println(transacao);
 			String[] itemsTransacao = transacao.split(",");
 			if(itemsTransacao[1].equalsIgnoreCase("CREDITO")) {
 				status = "aguardando_liberacao_fundos";
@@ -80,8 +79,7 @@ public class Solucao {
 				dataRecebimento = dataFormatada.format(dMais30);
 				valorOriginal = itemsTransacao[0];
 				valor = Double.parseDouble(valorOriginal) - 0.05*Double.parseDouble(valorOriginal);
-				DecimalFormat df = new DecimalFormat("#,###.00");
-				valorASerRecebido = df.format(valor);
+				valorASerRecebido = String.valueOf(valor);
 				infoTransacao[0] = status;
 				infoTransacao[1] = valorOriginal;
 				infoTransacao[2] = valorASerRecebido;
@@ -94,8 +92,7 @@ public class Solucao {
 				dataRecebimento = dataFormatada.format(dMais30);
 				valorOriginal = itemsTransacao[0];
 				valor = Double.parseDouble(valorOriginal) - 0.03*Double.parseDouble(valorOriginal);
-				DecimalFormat df = new DecimalFormat("#,###.00");
-				valorASerRecebido = df.format(valor);
+				valorASerRecebido = String.valueOf(valor);
 				infoTransacao[0] = status;
 				infoTransacao[1] = valorOriginal;
 				infoTransacao[2] = valorASerRecebido;
@@ -106,10 +103,12 @@ public class Solucao {
 
 		}
 
+		/*
 		System.out.println("ADIANTAMENTOS");
 		for (String adiantamento : infoAdiantamentos) {
 			System.out.println(adiantamento);
 		}
+		*/
 
 		// 100,CREDITO,764387534,Nome do cartao,06/03/2023,457,1
 		// 1,0.01
