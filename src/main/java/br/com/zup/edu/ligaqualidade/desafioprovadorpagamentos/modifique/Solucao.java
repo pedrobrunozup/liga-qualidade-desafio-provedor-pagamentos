@@ -1,6 +1,5 @@
 package br.com.zup.edu.ligaqualidade.desafioprovadorpagamentos.modifique;
 
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -39,38 +38,25 @@ public class Solucao {
 	 */
 	public static List<String[]> executa(List<String> infoTransacoes, List<String> infoAdiantamentos) {
 
-		/*
-		items transacao:
-		100,CREDITO,764387534,Nome do cartao,06/03/2023,457,1
-		itemsTransacao[0] -> valor
-		itemsTransacao[1] -> metodoPagamento
-		itemsTransacao[2] -> numeroCartao
-		itemsTransacao[3] -> nomeCartao
-		itemsTransacao[4] -> validade
-		itemsTransacao[5] -> cvv
-		itemsTransacao[6] -> idTransacao
-
-		 */
-
 		LocalDateTime hoje = LocalDateTime.now();
-		//Date dateHoje = Date.from(hoje.atZone(ZoneId.systemDefault()).toInstant());
 
 		String status = null;
 		String valorOriginal = null;
 		String valorASerRecebido = null;
 		String dataRecebimento = null;
 		
-		String[] infoTransacao = new String[] {"A","B","C","D"};
+		String[] infoTransacao;
 
 		double valor;
 
-		Date dMais30 = Date.from(hoje.atZone(ZoneId.systemDefault()).toInstant());
+		Date dMais30;
 
 		List<String[]> listaInfoTransacoes = new ArrayList<String[]>();
 
 		for (String transacao : infoTransacoes) {
-			//System.out.println(transacao);
 			String[] itemsTransacao = transacao.split(",");
+			infoTransacao = new String[] {"A","B","C","D","E"};
+			dMais30 = Date.from(hoje.atZone(ZoneId.systemDefault()).toInstant());
 			if(itemsTransacao[1].equalsIgnoreCase("CREDITO")) {
 				status = "aguardando_liberacao_fundos";
 				dMais30.setDate(dMais30.getDate() + 30);
@@ -78,12 +64,13 @@ public class Solucao {
 				SimpleDateFormat dataFormatada = new SimpleDateFormat(formato);
 				dataRecebimento = dataFormatada.format(dMais30);
 				valorOriginal = itemsTransacao[0];
-				valor = Double.parseDouble(valorOriginal) - 0.05*Double.parseDouble(valorOriginal);
+				valor = Double.parseDouble(valorOriginal) - 0.05 * Double.parseDouble(valorOriginal);
 				valorASerRecebido = String.valueOf(valor);
 				infoTransacao[0] = status;
 				infoTransacao[1] = valorOriginal;
 				infoTransacao[2] = valorASerRecebido;
 				infoTransacao[3] = dataRecebimento;
+				infoTransacao[4] = itemsTransacao[6];
 			} else if(itemsTransacao[1].equalsIgnoreCase("DEBITO")) {
 				status = "pago";
 				dMais30.setDate(dMais30.getDate() + 0);
@@ -97,28 +84,27 @@ public class Solucao {
 				infoTransacao[1] = valorOriginal;
 				infoTransacao[2] = valorASerRecebido;
 				infoTransacao[3] = dataRecebimento;
+				infoTransacao[4] = itemsTransacao[6];
 			}
 
 			listaInfoTransacoes.add(infoTransacao);
-
 		}
 
-		/*
-		System.out.println("ADIANTAMENTOS");
-		for (String adiantamento : infoAdiantamentos) {
-			System.out.println(adiantamento);
+		for (String adiantamento: infoAdiantamentos) {
+			String[] itemsAdiantamento = adiantamento.split(",");
+			dMais30 = Date.from(hoje.atZone(ZoneId.systemDefault()).toInstant());
+			dMais30.setDate(dMais30.getDate() + 0);
+			String formato = "dd/MM/yyyy";
+			SimpleDateFormat dataFormatada = new SimpleDateFormat(formato);
+			String dataFinal = dataFormatada.format(dMais30);
+			listaInfoTransacoes.forEach(strings -> {
+				if (strings[4].equals(itemsAdiantamento[0])) {
+					strings[0] = "pago";
+					strings[2] = String.valueOf(Double.parseDouble(strings[2]) - (Double.parseDouble(strings[2])*Double.parseDouble(itemsAdiantamento[1])));
+					strings[3] = dataFinal;
+				}
+			});
 		}
-		*/
-
-		// 100,CREDITO,764387534,Nome do cartao,06/03/2023,457,1
-		// 1,0.01
-
-		
-		// status, valorOriginal, valorASerRecebido, dataRecebimento
-		//return List.of(new String[][] {
-		//			 {"pago","200","194","04/03/2021"}
-		//			});
-
 		return listaInfoTransacoes;
 	}
 
