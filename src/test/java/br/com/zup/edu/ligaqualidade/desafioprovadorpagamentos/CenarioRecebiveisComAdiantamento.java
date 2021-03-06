@@ -83,8 +83,4 @@ public class CenarioRecebiveisComAdiantamento {
 
 	}
 	
-	public static void main(String[] args) {
-		System.out.println(new BigDecimal("85.40").setScale(0,RoundingMode.HALF_EVEN));
-	}
-
 }
