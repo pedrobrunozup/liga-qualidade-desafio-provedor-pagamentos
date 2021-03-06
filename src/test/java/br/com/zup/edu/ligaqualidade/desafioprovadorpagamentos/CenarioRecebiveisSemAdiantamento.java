@@ -65,14 +65,14 @@ public class CenarioRecebiveisSemAdiantamento {
 						)),
 				Arguments.of(
 						List.of(new DadosTesteTransacao("100", "CREDITO",1)),
-						List.of(new DadosEsperadosRetorno("aguardando_pagamento", "100", "95",
+						List.of(new DadosEsperadosRetorno("aguardando_liberacao_fundos", "100", "95",
 								hoje.plusDays(30).format(padraoFormatacao))
 
 						)),
 				Arguments.of(
 						List.of(new DadosTesteTransacao("100", "CREDITO",1),
 								new DadosTesteTransacao("100", "DEBITO",2)),
-						List.of(new DadosEsperadosRetorno("aguardando_pagamento", "100", "95",hoje.plusDays(30).format(padraoFormatacao)),
+						List.of(new DadosEsperadosRetorno("aguardando_liberacao_fundos", "100", "95",hoje.plusDays(30).format(padraoFormatacao)),
 								new DadosEsperadosRetorno("pago", "100", "97",hoje.format(padraoFormatacao))
 
 						))				
