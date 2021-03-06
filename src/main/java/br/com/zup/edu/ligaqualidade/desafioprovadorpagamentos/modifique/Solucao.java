@@ -85,8 +85,8 @@ public class Solucao {
 				infoTransacao[2] = valorASerRecebido;
 				infoTransacao[3] = dataRecebimento;
 			} else if(itemsTransacao[1].equalsIgnoreCase("DEBITO")) {
-				status = "aguardando_liberacao_fundos";
-				dMais30.setDate(dMais30.getDate() + 30);
+				status = "pago";
+				dMais30.setDate(dMais30.getDate() + 0);
 				String formato = "dd/MM/yyyy";
 				SimpleDateFormat dataFormatada = new SimpleDateFormat(formato);
 				dataRecebimento = dataFormatada.format(dMais30);
